@@ -1,21 +1,14 @@
 {
-  "name": "backend",
-  "module": "src/index.ts",
+  "name": "equipscout-backend",
+  "version": "1.0.0",
   "type": "module",
-  "private": true,
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "start": "node dist/index.js",
-    "build": "tsc -p tsconfig.prod.json",
-    "build:prod": "tsc -p tsconfig.prod.json",
-    "typecheck": "tsc --noEmit"
-  },
-  "devDependencies": {
-    "@types/bcryptjs": "^3.0.0",
-    "@types/node": "^20.0.0",
-    "prisma": "6",
-    "tsx": "^4.0.0",
-    "typescript": "5.8.3"
+    "start": "tsx src/index.ts",
+    "build": "echo 'No build needed - running TypeScript directly'",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@hono/node-server": "1.12.0",
@@ -25,6 +18,13 @@
     "better-auth": "^1.4.13",
     "hono": "4.6.0",
     "resend": "^6.7.0",
+    "tsx": "^4.0.0",
     "zod": "4.1.11"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
+    "@types/node": "^20.0.0",
+    "prisma": "6",
+    "typescript": "5.8.3"
   }
 }
