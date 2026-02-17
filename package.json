@@ -1,0 +1,1 @@
+{\n  \"name\": \"equipscout\",\n  \"version\": \"1.0.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"install\": \"cd backend && npm install\",\n    \"build\": \"cd backend && npm run build\",\n    \"start\": \"cd backend && npm start\"\n  }\n}
