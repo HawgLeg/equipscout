@@ -1,7 +1,7 @@
 [ phases.build ]
 cmds = [
-  "cd webapp && npm install",
-  "cd webapp && npm run build"
+  "cd /app/webapp && npm install",
+  "cd /app/webapp && npm run build"
 ]
 
 [ phases.setup ]
@@ -9,5 +9,6 @@ nixPkgs = [ "nodejs_20", "openssl" ]
 
 [ install ]
 cmds = [
-  "cd backend && npm install"
+  "npm install",
+  "npx prisma generate"
 ]
