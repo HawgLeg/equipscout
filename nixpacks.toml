@@ -10,4 +10,4 @@ cmds = [
 nixPkgs = [ "nodejs_20", "openssl" ]
 
 [ start ]
-cmd = "cd backend && npm start"
+cmd = "./start.sh"
