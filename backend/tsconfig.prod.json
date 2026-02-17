@@ -3,6 +3,9 @@
   "compilerOptions": {
     "noEmit": false,
     "strict": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": false,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
   }
 }
