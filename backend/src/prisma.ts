@@ -10,6 +10,14 @@ async function initSqlitePragmas(prisma: PrismaClient) {
   await prisma.$queryRawUnsafe("PRAGMA synchronous = NORMAL;");
 }
 
-initSqlitePragmas(prisma);
+// Only run PRAGMA commands on SQLite databases
+const databaseUrl = process.env.DATABASE_URL || "";
+const isSqlite = databaseUrl.startsWith("file:") || databaseUrl.includes("sqlite");
+
+if (isSqlite) {
+  initSqlitePragmas(prisma).catch((err) => {
+    console.error("Failed to initialize SQLite pragmas:", err);
+  });
+}
 
 export { prisma };
