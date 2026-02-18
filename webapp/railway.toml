@@ -1,11 +1,6 @@
-[phases.build]
-cmds = [
-    "npm ci",
-    "npm run build"
-]
+[build]
+builder = "nixpacks"
 
-[phases.setup]
-nixPkgs = ["nodejs_20"]
-
-[start]
-cmd = "npx serve -s dist -l tcp://0.0.0.0:$PORT"
+[deploy]
+startCommand = "npm install && npm run build && npx serve -s dist -l tcp://0.0.0.0:$PORT"
+restartPolicy = "on-failure"
