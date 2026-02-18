@@ -43,6 +43,12 @@ app.use(
 // Logging
 app.use("*", logger());
 
+// Request logging for diagnostics
+app.use("*", async (c, next) => {
+  console.log("REQ", c.req.method, c.req.path);
+  await next();
+});
+
 // Auth middleware - populates user/session for all routes
 app.use("*", async (c, next) => {
   try {
@@ -67,6 +73,9 @@ app.use("*", async (c, next) => {
 
 // Health check endpoint
 app.get("/health", (c) => c.json({ status: "ok" }));
+
+// Version endpoint for deployment verification
+app.get("/__version", (c) => c.json({ version: process.env.RAILWAY_GIT_COMMIT_SHA || "unknown", time: new Date().toISOString() }));
 
 // Mount Better Auth handler at /api/auth/* with failed login tracking
 app.on(["POST", "GET"], "/api/auth/*", async (c) => {
@@ -115,6 +124,9 @@ app.route("/api/leads", leadsRouter);
 app.route("/api/contact-events", contactEventsRouter);
 app.route("/api/reports", reportsRouter);
 app.route("/api/admin", adminRouter);
+
+// Catch-all diagnostic route (must be LAST)
+app.all("*", (c) => c.json({ ok: true, path: c.req.path, method: c.req.method }));
 
 const port = Number(process.env.PORT) || 3000;
 
