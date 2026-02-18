@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "install": "cd backend && npm install",
-    "build": "cd webapp && npm install && npm run build",
-    "start": "cd webapp && npm run start"
+    "build": "cd webapp && npm ci && npm run build",
+    "start": "bash start.sh"
   }
 }
