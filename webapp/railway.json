@@ -1,5 +1,0 @@
-{
-  "buildCommand": "npm install && npm run build",
-  "startCommand": "npx serve -s dist -l tcp://0.0.0.0:$PORT",
-  "installCommand": "npm install"
-}

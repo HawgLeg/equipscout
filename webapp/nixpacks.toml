@@ -1,9 +1,0 @@
-[phases.build]
-cmds = ["npm install", "npm run build"]
-
-[phases.setup]
-nixPkgs = ["nodejs_20"]
-providers = []  # Disable all auto-detection including vite
-
-[start]
-cmd = "npx serve -s dist -l tcp://0.0.0.0:$PORT"
