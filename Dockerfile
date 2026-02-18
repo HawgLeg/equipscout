@@ -38,5 +38,5 @@ RUN npx prisma generate
 # Expose port
 EXPOSE 3000
 
-# Start with tsx (TypeScript execution)
-CMD ["npx", "tsx", "src/index.ts"]
+# Start with npm start (runs migrations + seed + tsx)
+CMD ["npm", "start"]
