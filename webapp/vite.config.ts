@@ -7,7 +7,7 @@ import path from "path";
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
-    port: 8000,
+    port: process.env.PORT ? parseInt(process.env.PORT) : 8000,
     allowedHosts: true, // Allow all hosts
   },
   plugins: [
