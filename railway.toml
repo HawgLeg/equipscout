@@ -1,0 +1,11 @@
+[build]
+builder = "dockerfile"
+
+[deploy]
+startCommand = "npm start"
+restartPolicy = "on-failure"
+
+[deploy.healthcheck]
+path = "/health"
+timeout = 100
+interval = 15
