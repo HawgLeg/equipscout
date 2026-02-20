@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "echo DEV DISABLED",
     "build": "vite build",
-    "start": "npx serve -s dist -l tcp://0.0.0.0:$PORT"
+    "start": "npx serve -s dist -l $PORT"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

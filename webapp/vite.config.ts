@@ -5,11 +5,6 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  server: {
-    host: "::",
-    port: process.env.PORT ? parseInt(process.env.PORT) : 8000,
-    allowedHosts: true, // Allow all hosts
-  },
   plugins: [
     react(),
     mode === "development" && vibecodePlugin(),
