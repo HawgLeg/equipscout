@@ -5,4 +5,4 @@ RUN npm install
 COPY . .
 RUN npm run build
 RUN npm i -g serve
-CMD ["sh", "-c", "serve -s dist -l $PORT"]
+CMD ["sh","-c","npx serve -s dist -l tcp://0.0.0.0:3000"]
