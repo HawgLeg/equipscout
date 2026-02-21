@@ -2,7 +2,7 @@
 builder = "nixpacks"
 
 [phases.build]
-cmds = ["npm ci", "npm run build"]
+cmds = ["npm install", "npm run build"]
 
 [deploy]
 startCommand = "npx serve -s dist -l tcp://0.0.0.0:3000"
