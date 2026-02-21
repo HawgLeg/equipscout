@@ -130,7 +130,7 @@ app.route("/api/contact-events", contactEventsRouter);
 app.route("/api/reports", reportsRouter);
 app.route("/api/admin", adminRouter);
 
-const port = Number(process.env.PORT) || 3000;
+const port = 3000;
 
 // Use Node server for production compatibility
 import { serve } from "@hono/node-server";
