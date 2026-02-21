@@ -1,5 +1,5 @@
 [build]
-builder = "nixpacks"
+builder = "dockerfile"
 
 [deploy]
-startCommand = "npx serve -s dist -l tcp://0.0.0.0:3000"
+startCommand = "serve -s dist -l tcp://0.0.0.0:3000"
