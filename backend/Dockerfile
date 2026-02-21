@@ -7,16 +7,16 @@ RUN apk add --no-cache openssl
 WORKDIR /app
 
 # Copy backend files
-COPY backend/package.json ./
+COPY package.json ./
 RUN npm install
 
 # Copy prisma schema and generate client
-COPY backend/prisma ./prisma/
+COPY prisma ./prisma/
 RUN npx prisma generate
 
 # Copy backend source
-COPY backend/src ./src/
-COPY backend/tsconfig.json ./
+COPY src ./src/
+COPY tsconfig.json ./
 
 # Production stage
 FROM node:20-alpine AS production
