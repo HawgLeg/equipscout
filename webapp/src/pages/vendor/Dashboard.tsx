@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Vendor, VendorAnalytics } from "../../../../backend/src/types";
 
-const baseUrl = import.meta.env.VITE_BACKEND_URL || "";
+const baseUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_BACKEND_URL || "";
 
 async function fetchVendorData(): Promise<Vendor> {
   const response = await fetch(`${baseUrl}/api/vendors/me`, {

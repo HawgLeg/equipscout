@@ -49,7 +49,7 @@ export default function VendorJoin() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const baseUrl = import.meta.env.VITE_BACKEND_URL || "";
+  const baseUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_BACKEND_URL || "";
 
   const form = useForm<VendorJoinFormValues>({
     resolver: zodResolver(vendorJoinSchema),

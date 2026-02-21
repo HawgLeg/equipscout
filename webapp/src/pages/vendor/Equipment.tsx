@@ -19,7 +19,7 @@ import { EquipmentForm } from "@/components/vendor/EquipmentForm";
 import { useToast } from "@/hooks/use-toast";
 import type { Equipment, AvailabilityStatus } from "../../../../backend/src/types";
 
-const baseUrl = import.meta.env.VITE_BACKEND_URL || "";
+const baseUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_BACKEND_URL || "";
 
 interface EquipmentWithAvailability extends Equipment {
   availability?: {

@@ -27,7 +27,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import type { Vendor } from "../../../../backend/src/types";
 
-const baseUrl = import.meta.env.VITE_BACKEND_URL || "";
+const baseUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_BACKEND_URL || "";
 
 const profileSchema = z.object({
   name: z.string().min(1, "Company name is required"),
