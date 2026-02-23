@@ -1,0 +1,227 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Better Auth tables
+model User {
+  id            String    @id
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  role          String    @default("vendor") // vendor | admin
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  vendor        Vendor?   @relation("UserVendor")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// EquipScout Business Models
+model Vendor {
+  id              String   @id @default(cuid())
+  userId          String?  @unique
+  user            User?    @relation("UserVendor", fields: [userId], references: [id], onDelete: SetNull)
+  name            String
+  phone           String
+  email           String
+  website         String?
+  yardAddress     String
+  yardLat         Float?
+  yardLng         Float?
+  planStatus      String   @default("free") // free | pro | enterprise
+  isSponsored     Boolean  @default(false)
+  isActive        Boolean  @default(true)
+  // Vendor management metadata
+  billingStatus   String   @default("ACTIVE") // ACTIVE | PAUSED | OPTED_OUT
+  onboardingDate  DateTime @default(now())
+  lastContactedAt DateTime?
+  adminNotes      String?  // Free text for admin notes
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  equipment      Equipment[]
+  leadRequests   LeadRequest[]
+  contactEvents  ContactEvent[]
+  auditLogs      AuditLog[]
+  billing        VendorBilling?
+  sponsoredSlots SponsoredSlot[]
+}
+
+model Equipment {
+  id          String   @id @default(cuid())
+  vendorId    String
+  vendor      Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  type        String   // CTL | SKID
+  sizeClass   String?  // small | medium | large
+  make        String?
+  model       String?
+  year        Int?
+  rateHourMin Float?
+  rateHourMax Float?
+  rateDayMin  Float?
+  rateDayMax  Float?
+  notes       String?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  availability  Availability?
+  leadRequests  LeadRequest[]
+  contactEvents ContactEvent[]
+}
+
+model Availability {
+  id           String   @id @default(cuid())
+  equipmentId  String   @unique
+  equipment    Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+  status       String   @default("UNKNOWN") // AVAILABLE | LIMITED | UNAVAILABLE | UNKNOWN
+  earliestDate DateTime?
+  lastUpdated  DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model LeadRequest {
+  id                  String   @id @default(cuid())
+  vendorId            String
+  vendor              Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  equipmentId         String?
+  equipment           Equipment? @relation(fields: [equipmentId], references: [id], onDelete: SetNull)
+  requesterName       String?
+  requesterPhone      String?
+  requesterEmail      String?
+  message             String?
+  jobsiteLocationText String?
+  radius              Int?
+  needDate            String?  // today | tomorrow | this_week
+  searchParamsJson    String?
+  createdAt           DateTime @default(now())
+}
+
+model ContactEvent {
+  id                  String   @id @default(cuid())
+  vendorId            String
+  vendor              Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  equipmentId         String?
+  equipment           Equipment? @relation(fields: [equipmentId], references: [id], onDelete: SetNull)
+  eventType           String   // CALL | TEXT | EMAIL | WEBSITE | REQUEST
+  sessionId           String?
+  ipHash              String?
+  userAgentHash       String?
+  searchLocationText  String?
+  searchRadius        Int?
+  needDate            String?  // TODAY | TOMORROW | THIS_WEEK | ANY_TIME
+  referrer            String?
+  isBillable          Boolean  @default(true)
+  dedupeKey           String?
+  notes               String?
+  searchParamsJson    String?
+  createdAt           DateTime @default(now())
+
+  @@index([vendorId])
+  @@index([dedupeKey])
+  @@index([createdAt])
+}
+
+model VendorBilling {
+  id                String   @id @default(cuid())
+  vendorId          String   @unique
+  vendor            Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  cpcRate           Float    @default(15)
+  billingCycleStart DateTime?
+  billingCycleEnd   DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model SponsoredSlot {
+  id             String   @id @default(cuid())
+  vendorId       String
+  vendor         Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  isSponsored    Boolean  @default(true)
+  sponsoredStart DateTime
+  sponsoredEnd   DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([vendorId])
+  @@index([sponsoredStart, sponsoredEnd])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  vendorId  String?
+  vendor    Vendor?  @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+  userId    String?
+  action    String   // login | listing_edit | plan_change | admin_action
+  details   String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+}
+
+model Report {
+  id          String   @id @default(cuid())
+  equipmentId String?
+  vendorId    String?
+  reason      String   @default("outdated")
+  status      String   @default("pending") // pending | reviewed | dismissed
+  createdAt   DateTime @default(now())
+  reviewedAt  DateTime?
+}
+
+model LoginAttempt {
+  id            String   @id @default(cuid())
+  email         String
+  success       Boolean
+  ipHash        String?
+  userAgentHash String?
+  createdAt     DateTime @default(now())
+
+  @@index([email])
+  @@index([createdAt])
+  @@index([success])
+}

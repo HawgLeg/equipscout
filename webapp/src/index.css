@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* EquipScout Design System - Industrial Construction Theme */
+
+@layer base {
+  :root {
+    /* Warm off-white background */
+    --background: 40 20% 98%;
+    --foreground: 220 30% 15%;
+
+    /* Card - slightly warm white */
+    --card: 0 0% 100%;
+    --card-foreground: 220 30% 15%;
+
+    /* Popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 30% 15%;
+
+    /* Primary - Safety Orange / Construction */
+    --primary: 25 95% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - Steel Slate */
+    --secondary: 220 20% 96%;
+    --secondary-foreground: 220 30% 25%;
+
+    /* Muted */
+    --muted: 220 15% 95%;
+    --muted-foreground: 220 10% 45%;
+
+    /* Accent - Deep slate blue */
+    --accent: 220 30% 20%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Status colors */
+    --available: 142 71% 45%;
+    --limited: 45 93% 47%;
+    --unavailable: 0 84% 60%;
+    --unknown: 220 10% 60%;
+
+    /* Border & Input */
+    --border: 220 15% 88%;
+    --input: 220 15% 88%;
+    --ring: 25 95% 53%;
+
+    --radius: 0.625rem;
+
+    /* Sidebar */
+    --sidebar-background: 220 30% 15%;
+    --sidebar-foreground: 220 10% 90%;
+    --sidebar-primary: 25 95% 53%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 25% 22%;
+    --sidebar-accent-foreground: 220 10% 90%;
+    --sidebar-border: 220 25% 25%;
+    --sidebar-ring: 25 95% 53%;
+  }
+
+  .dark {
+    --background: 220 30% 8%;
+    --foreground: 220 10% 95%;
+
+    --card: 220 30% 12%;
+    --card-foreground: 220 10% 95%;
+
+    --popover: 220 30% 12%;
+    --popover-foreground: 220 10% 95%;
+
+    --primary: 25 95% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 25% 18%;
+    --secondary-foreground: 220 10% 90%;
+
+    --muted: 220 25% 18%;
+    --muted-foreground: 220 10% 55%;
+
+    --accent: 25 95% 53%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 25% 20%;
+    --input: 220 25% 20%;
+    --ring: 25 95% 53%;
+
+    --sidebar-background: 220 30% 6%;
+    --sidebar-foreground: 220 10% 90%;
+    --sidebar-primary: 25 95% 53%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 25% 15%;
+    --sidebar-accent-foreground: 220 10% 90%;
+    --sidebar-border: 220 25% 18%;
+    --sidebar-ring: 25 95% 53%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans font-bold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Freshness badges */
+  .badge-fresh {
+    @apply bg-emerald-500/10 text-emerald-600 border-emerald-500/20;
+  }
+
+  .badge-moderate {
+    @apply bg-amber-500/10 text-amber-600 border-amber-500/20;
+  }
+
+  .badge-stale {
+    @apply bg-red-500/10 text-red-600 border-red-500/20;
+  }
+
+  /* Status indicators */
+  .status-available {
+    @apply text-emerald-600;
+  }
+
+  .status-limited {
+    @apply text-amber-600;
+  }
+
+  .status-unavailable {
+    @apply text-red-600;
+  }
+
+  /* Touch-friendly buttons */
+  .touch-target {
+    @apply min-h-[48px] min-w-[48px];
+  }
+
+  /* Industrial card style */
+  .industrial-card {
+    @apply bg-card rounded-lg border border-border shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+
+  /* Sponsored label */
+  .sponsored-label {
+    @apply text-xs font-medium uppercase tracking-wider text-primary bg-primary/10 px-2 py-1 rounded;
+  }
+}
+
+@layer utilities {
+  /* Subtle grain texture overlay */
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+  }
+}
