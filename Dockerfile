@@ -21,8 +21,8 @@ COPY --from=builder /app/dist ./dist
 # Install serve globally
 RUN npm install -g serve
 
-# Use Railway's $PORT env var
+# Use Railway's $PORT env var, default to 3000
 ENV PORT=3000
 EXPOSE 3000
 
-CMD serve -s dist -l 0.0.0.0:$PORT
+CMD serve -s dist -p $PORT
