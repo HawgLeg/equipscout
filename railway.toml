@@ -1,0 +1,10 @@
+[build]
+builder = "NIXPACKS"
+buildCommand = "cd webapp && npm ci && npm run build"
+
+[build.env]
+NODE_VERSION = "20"
+NIXPACKS_BUILD_DIR = "webapp"
+
+[deploy]
+startCommand = "cd webapp && npx serve -s dist -l 0.0.0.0:$PORT"

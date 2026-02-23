@@ -1,9 +1,0 @@
-[build]
-builder = "NIXPACKS"
-buildCommand = "npm ci && npm run build"
-
-[build.env]
-NODE_VERSION = "20"
-
-[deploy]
-startCommand = "npx serve -s dist -l 0.0.0.0:$PORT"
